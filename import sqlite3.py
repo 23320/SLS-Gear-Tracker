@@ -1,10 +1,7 @@
 import sqlite3
-
-# Connect to or create the database
 conn = sqlite3.connect('gear.db')
 cursor = conn.cursor()
 
-# Create table if it doesn't exist
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS gear (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -16,7 +13,7 @@ CREATE TABLE IF NOT EXISTS gear (
 ''')
 conn.commit()
 
-# Show menu
+
 def menu():
     while True:
         print("\nSurf Life Saving Gear Tracker")
@@ -41,13 +38,12 @@ def menu():
         else:
             print("Invalid choice")
 
-# View gear
 def show_gear():
     cursor.execute("SELECT * FROM gear")
     for row in cursor.fetchall():
         print(row)
 
-# Add gear
+
 def add_gear():
     name = input("Name: ")
     gear_type = input("Type: ")
@@ -57,7 +53,7 @@ def add_gear():
     conn.commit()
     print("Gear added.")
 
-# Update quantity
+
 def update_quantity():
     gear_id = input("Enter gear ID to update: ")
     new_qty = input("New quantity: ")
@@ -65,15 +61,15 @@ def update_quantity():
     conn.commit()
     print("Quantity updated.")
 
-# Delete gear
+
 def delete_gear():
     gear_id = input("Enter gear ID to delete: ")
     cursor.execute("DELETE FROM gear WHERE id = ?", (gear_id,))
     conn.commit()
     print("Gear deleted.")
 
-# Run the menu
+
 menu()
 
-# Close connection when done
+
 conn.close()
