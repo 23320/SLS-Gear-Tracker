@@ -72,4 +72,4 @@ def delete_gear():
 menu()
 
 
-conn.close()
+conn.close())
