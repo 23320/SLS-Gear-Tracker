@@ -2,16 +2,8 @@ import sqlite3
 conn = sqlite3.connect('gear.db')
 cursor = conn.cursor()
 
-cursor.execute('''
-CREATE TABLE IF NOT EXISTS gear (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    type TEXT,
-    cost REAL,
-    quantity INTEGER
-)
-''')
-conn.commit()
+
+
 
 
 def menu():
@@ -72,4 +64,4 @@ def delete_gear():
 menu()
 
 
-conn.close())
+conn.close()
