@@ -1,12 +1,7 @@
 import sqlite3
-conn = sqlite3.connect('gear.db')
-cursor = conn.cursor()
 
 
-
-
-
-def menu():
+def menu(cursor, conn):
     while True:
         print("\nSurf Life Saving Gear Tracker")
         print("1. Show gear")
@@ -61,7 +56,6 @@ def delete_gear():
     print("Gear deleted.")
 
 
-menu()
-
-
-conn.close()
+with sqlite3.connect('gear.db') as conn:
+    cursor = conn.cursor()
+    menu(cursor, conn)
