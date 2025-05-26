@@ -13,25 +13,25 @@ def menu(cursor, conn):
         choice = input("Choose an option: ")
 
         if choice == "1":
-            show_gear()
+            show_gear(cursor)
         elif choice == "2":
-            add_gear()
+            add_gear(cursor, conn)
         elif choice == "3":
-            update_quantity()
+            update_quantity(cursor, conn)
         elif choice == "4":
-            delete_gear()
+            delete_gear(cursor, conn)
         elif choice == "5":
             break
         else:
             print("Invalid choice")
 
-def show_gear():
+def show_gear(cursor):
     cursor.execute("SELECT * FROM gear")
     for row in cursor.fetchall():
         print(row)
 
 
-def add_gear():
+def add_gear(cursor, conn):
     name = input("Name: ")
     gear_type = input("Type: ")
     cost = float(input("Cost: "))
@@ -41,7 +41,7 @@ def add_gear():
     print("Gear added.")
 
 
-def update_quantity():
+def update_quantity(cursor, conn):
     gear_id = input("Enter gear ID to update: ")
     new_qty = input("New quantity: ")
     cursor.execute("UPDATE gear SET quantity = ? WHERE id = ?", (new_qty, gear_id))
@@ -49,7 +49,7 @@ def update_quantity():
     print("Quantity updated.")
 
 
-def delete_gear():
+def delete_gear(cursor, conn):
     gear_id = input("Enter gear ID to delete: ")
     cursor.execute("DELETE FROM gear WHERE id = ?", (gear_id,))
     conn.commit()
