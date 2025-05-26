@@ -27,8 +27,12 @@ def menu(cursor, conn):
 
 def show_gear(cursor):
     cursor.execute("SELECT * FROM gear")
-    for row in cursor.fetchall():
-        print(row)
+    rows = cursor.fetchall()
+    if not rows:
+        print("Database is empty.")
+    else:
+        for row in rows:
+            print(row)
 
 
 def add_gear(cursor, conn):
