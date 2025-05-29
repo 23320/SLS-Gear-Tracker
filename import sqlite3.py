@@ -36,6 +36,11 @@ def show_gear(cursor):
 
 
 def add_gear(cursor, conn):
+    cursor.execute("SELECT COUNT(*) FROM gear")
+    if cursor.fetchone()[0] == 0:
+        cursor.execute("DELETE FROM sqlite_sequence WHERE name='gear'")
+
+    
     name = input("Name: ")
     gear_type = input("Type: ")
     cost = float(input("Cost: "))
