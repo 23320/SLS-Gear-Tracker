@@ -43,13 +43,18 @@ def add_gear(cursor, conn):
     
     name = input("Name: ")
     gear_type = input("Type: ")
-    cost = float(input("Cost: "))
-    quantity = int(input("Quantity: "))
+    try:
+        cost = float(input("Cost: "))
+        quantity = int(input("Quantity: "))
+    except:
+        print("Invalid input")
+        return
+
     cursor.execute("INSERT INTO gear (name, type, cost, quantity) VALUES (?, ?, ?, ?)", (name, gear_type, cost, quantity))
     conn.commit()
     print("Gear added.")
-
-
+    
+    
 def update_quantity(cursor, conn):
     gear_id = input("Enter gear ID to update: ")
     new_qty = input("New quantity: ")
