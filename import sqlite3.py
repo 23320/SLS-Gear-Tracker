@@ -1,6 +1,6 @@
 import sqlite3
 
-
+#shows menu and gets the user to pick which option they want.
 def menu(cursor, conn):
     while True:
         print("\nSurf Life Saving Gear Tracker")
@@ -21,20 +21,20 @@ def menu(cursor, conn):
         elif choice == "4":
             delete_gear(cursor, conn)
         elif choice == "5":
-            break
+            break #the break will stop running the program
         else:
             print("Invalid choice")
-
+#this will show the all the gear in the databse.
 def show_gear(cursor):
     cursor.execute("SELECT * FROM gear")
     rows = cursor.fetchall()
     if not rows:
-        print("Database is empty.")
+        print("No gear found in database")
     else:
         for row in rows:
             print(row)
 
-
+#you will be able to add gear with this function
 def add_gear(cursor, conn):
     cursor.execute("SELECT COUNT(*) FROM gear")
     if cursor.fetchone()[0] == 0:
@@ -54,13 +54,10 @@ def add_gear(cursor, conn):
         print("Invalid input")
         return
     cursor.execute("INSERT INTO gear (name, type, cost, quantity) VALUES (?, ?, ?, ?)", (name, gear_type, cost, quantity))
-    conn.commit()
+    conn.commit() #conn.commit will save the changes made
     print("Gear added.")
     
-    
-    
-    
-    
+#this will update the quanitity of gear   
 def update_quantity(cursor, conn):
     gear_id = input("Enter gear ID to update: ")
 
@@ -78,7 +75,7 @@ def update_quantity(cursor, conn):
     conn.commit()
     print("Quantity updated.")
 
-
+# this one you will be able to delete gear with.
 def delete_gear(cursor, conn):
     gear_id = input("Enter gear ID to delete: ")
     cursor.execute("SELECT * FROM gear WHERE id = ?", (gear_id,))
@@ -89,7 +86,7 @@ def delete_gear(cursor, conn):
     conn.commit()
     print("Gear deleted.")
 
-
+#this will connect it back to the database then start the menu
 with sqlite3.connect('gear.db') as conn:
     cursor = conn.cursor()
     menu(cursor, conn)
