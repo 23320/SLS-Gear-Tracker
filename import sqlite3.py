@@ -42,20 +42,17 @@ def add_gear(cursor, conn):
     name = input("Name: ")
     gear_type = input("Type: ")
 
-    while True:
-        try:
-            cost = float(input("Cost: "))
-            break
-        except:
-            print("Invalid input")
+    try:
+        cost = float(input("Cost: "))
+    except:
+        print("Invalid input")
+        return
 
-    while True:
-        try:
-            quantity = int(input("Quantity: "))
-            break
-        except:
-            print("Invalid input")
-
+    try:
+        quantity = int(input("Quantity: "))
+    except:
+        print("Invalid input")
+        return
     cursor.execute("INSERT INTO gear (name, type, cost, quantity) VALUES (?, ?, ?, ?)", (name, gear_type, cost, quantity))
     conn.commit()
     print("Gear added.")
@@ -71,14 +68,12 @@ def update_quantity(cursor, conn):
     if cursor.fetchone() is None:
         print("ID does not exist")
         return
-
-    while True:
-        try:
-            new_qty = int(input("New quantity: "))
-            break
-        except:
-            print("Invalid input")
-
+  
+    try:
+        new_qty = int(input("New quantity: "))
+    except:
+        print("Invalid input")
+        return
     cursor.execute("UPDATE gear SET quantity = ? WHERE id = ?", (new_qty, gear_id))
     conn.commit()
     print("Quantity updated.")
@@ -86,6 +81,10 @@ def update_quantity(cursor, conn):
 
 def delete_gear(cursor, conn):
     gear_id = input("Enter gear ID to delete: ")
+    cursor.execute("SELECT * FROM gear WHERE id = ?", (gear_id,))
+    if cursor.fetchone() is None:
+        print("ID does not exist")
+        return
     cursor.execute("DELETE FROM gear WHERE id = ?", (gear_id,))
     conn.commit()
     print("Gear deleted.")
