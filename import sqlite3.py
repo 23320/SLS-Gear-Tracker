@@ -64,28 +64,28 @@ def update_quantity(cursor, conn):
 
     cursor.execute("SELECT * FROM gear WHERE id = ?", (gear_id,))
     if cursor.fetchone() is None:
-        print("ID does not exist")
+        print("ID does not exist") #if the user enters a Id that dosent exsist this message come up
         return
     while True:
         try:
             new_qty = int(input("New quantity: "))
             break
         except:
-            print("Invalid input")
+            print("Invalid input") # when a non number is entered
     cursor.execute("UPDATE gear SET quantity = ? WHERE id = ?", (new_qty, gear_id))
-    conn.commit()
-    print("Quantity updated.")
+    conn.commit()#saves the changes
+    print("Quantity updated.") #once the quanity updates this message come up
 
 # this one you will be able to delete gear with.
 def delete_gear(cursor, conn):
     gear_id = input("Enter gear ID to delete: ")
     cursor.execute("SELECT * FROM gear WHERE id = ?", (gear_id,))
     if cursor.fetchone() is None:
-        print("ID does not exist")
+        print("ID does not exist") # if you dont ebetr the right id to delete a item this will come up
         return
     cursor.execute("DELETE FROM gear WHERE id = ?", (gear_id,))
-    conn.commit()
-    print("Gear deleted.")
+    conn.commit() #saves the changes
+    print("Gear deleted.")#comes up when you delete the gear
 
 #this will connect it back to the database then start the menu
 with sqlite3.connect('gear.db') as conn:
