@@ -41,18 +41,19 @@ def add_gear(cursor, conn):
         cursor.execute("DELETE FROM sqlite_sequence WHERE name='gear'")
     name = input("Name: ")
     gear_type = input("Type: ")
-
-    try:
-        cost = float(input("Cost: "))
-    except:
-        print("Invalid input")
-        return
-
-    try:
-        quantity = int(input("Quantity: "))
-    except:
-        print("Invalid input")
-        return
+    while True:
+        try:
+            cost = float(input("Cost: "))
+            break
+        except:
+            print("Invalid input")
+    while True:
+        try:
+            quantity = int(input("Quantity: "))
+            break
+        except:
+            print("Invalid input")
+        
     cursor.execute("INSERT INTO gear (name, type, cost, quantity) VALUES (?, ?, ?, ?)", (name, gear_type, cost, quantity))
     conn.commit() #conn.commit will save the changes made
     print("Gear added.")
@@ -65,12 +66,12 @@ def update_quantity(cursor, conn):
     if cursor.fetchone() is None:
         print("ID does not exist")
         return
-  
-    try:
-        new_qty = int(input("New quantity: "))
-    except:
-        print("Invalid input")
-        return
+    while True:
+        try:
+            new_qty = int(input("New quantity: "))
+            break
+        except:
+            print("Invalid input")
     cursor.execute("UPDATE gear SET quantity = ? WHERE id = ?", (new_qty, gear_id))
     conn.commit()
     print("Quantity updated.")
